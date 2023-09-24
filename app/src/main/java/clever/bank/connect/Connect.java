@@ -1,0 +1,9 @@
+package clever.bank.connect;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+
+public interface Connect {
+    Connection connect() throws SQLException;
+    boolean close();
+}
