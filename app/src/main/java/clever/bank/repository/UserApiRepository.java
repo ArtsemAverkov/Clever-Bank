@@ -15,31 +15,23 @@ public class UserApiRepository implements UserRepository{
     }
 
     @Override
-    public Long create(User user) {
+    public boolean create(User user) {
         try (Connection conn = connection.connect()) {
             PreparedStatement statement =
-                    conn.prepareStatement("INSERT INTO user (name, lastName, email) VALUES (?,?,?)");
-            int returnGeneratedKeys = Statement.RETURN_GENERATED_KEYS;
+                    conn.prepareStatement("INSERT INTO users (name, last_name, email) VALUES (?,?,?)");
             statement.setString(1, user.getName());
             statement.setString(2, user.getLastName());
             statement.setString(3, user.getEmail());
-            int i = statement.executeUpdate();
-            if (i == 0) {
+            int rowsInserted = statement.executeUpdate();
+
+            if (rowsInserted == 0) {
                 throw new SQLException("Вставка записи не удалась, ни одна строка не была изменена.");
             }
-            ResultSet generatedKeys = statement.getGeneratedKeys();
 
-            connection.close();
-            if (generatedKeys.next()) {
-                long generatedId = generatedKeys.getLong(1);
-                return generatedId;
-
-            } else {
-                throw new SQLException("Не удалось получить сгенерированный ключ.");
-            }
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
+        return true;
     }
 
 

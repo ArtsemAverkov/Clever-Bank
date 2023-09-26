@@ -2,3 +2,4 @@ databaseConfig:
  url: jdbc:postgresql://localhost:5432/artemaverkov
  username: artemaverkov
  password: root
+ driver-class-name: org.postgresql.Driver

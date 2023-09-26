@@ -13,8 +13,8 @@ public class UserApiService implements UserService{
 
     }
     @Override
-    public Long create(User user) {
-        return null;
+    public boolean create(User user) {
+        return userRepository.create(user);
     }
 
     @Override

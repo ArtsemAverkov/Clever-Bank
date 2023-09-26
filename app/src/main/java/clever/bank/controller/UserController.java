@@ -16,9 +16,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet("/user")
+@WebServlet("/users")
 public class UserController extends HttpServlet {
-
+    Gson gson = new Gson();
     private final UserRepository userRepository = new UserApiRepository();
     private final UserService userService = new UserApiService(userRepository);
 
@@ -34,12 +34,12 @@ public class UserController extends HttpServlet {
         }
         String jsonData = jsonInput.toString();
 
-        Gson gson = new Gson();
+
         User user = gson.fromJson(jsonData, User.class);
-        Long aLong = userService.create(user);
+        boolean b = userService.create(user);
 
         PrintWriter out = resp.getWriter();
-        out.println(aLong);
+        out.println(b);
     }
 }
 

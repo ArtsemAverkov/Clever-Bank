@@ -16,11 +16,12 @@ public class ConnectPostgresQL implements Connect{
 
 
     @Override
-    public Connection connect() throws SQLException {
-        String password = config.getDatabaseConfig().getPassword();
-        String url = config.getDatabaseConfig().getUrl();
-        String username = config.getDatabaseConfig().getUsername();
-        Connection connections = DriverManager.getConnection(password, url, username);
+    public Connection connect() throws SQLException, ClassNotFoundException {
+        Class.forName("org.postgresql.Driver");
+        String password = "root";
+        String url = "jdbc:postgresql://localhost:5432/artemaverkov";
+        String username ="artemaverkov";
+        Connection connections = DriverManager.getConnection(url, username, password);
         return connections;
     }
 
